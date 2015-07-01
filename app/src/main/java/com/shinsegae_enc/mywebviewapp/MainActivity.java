@@ -23,7 +23,8 @@ public class MainActivity extends ActionBarActivity {
 
         mWebView = (WebView) findViewById(R.id.WebView1);
         mWebView.getSettings().setJavaScriptEnabled(true);      // 웹뷰에서 자바 스크립트 사용
-        mWebView.loadUrl( "http://wishroom.kr/" );            // 웹뷰에서 불러올 URL 입력
+        mWebView.getSettings().setDefaultTextEncodingName("euc-kr");
+        mWebView.loadUrl( "http://b2b.shinsegae-con.co.kr/android/ReadingApp/test.html" );            // 웹뷰에서 불러올 URL 입력
         mWebView.setWebViewClient(new WishWebViewClient());
     }
 
