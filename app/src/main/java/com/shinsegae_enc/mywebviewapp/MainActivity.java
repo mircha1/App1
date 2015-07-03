@@ -9,11 +9,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private WebView mWebView;    // 웹뷰 선언
+
+    private final long FINSH_INTERVAL_TIME    = 2000;  // 2초안에 뒤로가기를 한번더 누르면 종료되도록 2000설정
+    private long  backPressedTime              = 0; // 백키를 눌렀을때 시간 0초 ~ 2초
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,5 +72,19 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        long tempTime        = System.currentTimeMillis();
+        long intervalTime    = tempTime - backPressedTime;
+
+        if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
+            super.onBackPressed();
+        }
+        else {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "'뒤로'버튼을한번더누르시면종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
