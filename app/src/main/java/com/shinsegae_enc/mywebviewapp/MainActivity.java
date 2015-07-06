@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ public class MainActivity extends ActionBarActivity {
         mWebView = (WebView) findViewById(R.id.WebView1);
         mWebView.getSettings().setJavaScriptEnabled(true);      // 웹뷰에서 자바 스크립트 사용
         mWebView.getSettings().setDefaultTextEncodingName("euc-kr");
+        mWebView.clearCache(true);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.loadUrl( "http://b2b.shinsegae-con.co.kr/android/ReadingApp/test.html" );            // 웹뷰에서 불러올 URL 입력
         mWebView.setWebViewClient(new WishWebViewClient());
     }
