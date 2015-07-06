@@ -2,6 +2,7 @@ package com.shinsegae_enc.mywebviewapp;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -63,6 +64,12 @@ public class MainActivity extends ActionBarActivity {
         mWebView.setWebViewClient(new WishWebViewClient());
         mWebView.loadUrl("http://b2b.shinsegae-con.co.kr/android/ReadingApp/test.html" );            // 웹뷰에서 불러올 URL 입력
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // TODO Auto-generated method stub
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
