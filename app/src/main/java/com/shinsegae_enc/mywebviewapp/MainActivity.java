@@ -1,12 +1,16 @@
 package com.shinsegae_enc.mywebviewapp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -31,12 +35,37 @@ public class MainActivity extends ActionBarActivity {
         mWebView.getSettings().setDefaultTextEncodingName("euc-kr");
         mWebView.clearCache(true);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView.loadUrl( "http://b2b.shinsegae-con.co.kr/android/ReadingApp/test.html" );            // 웹뷰에서 불러올 URL 입력
         mWebView.setWebViewClient(new WishWebViewClient());
+
+        final Context myApp = this;
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result)
+            {
+                new AlertDialog.Builder(myApp)
+                        //.setTitle("AlertDialog")
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok,
+                                new AlertDialog.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        result.confirm();
+                                    }
+                                })
+                        .setCancelable(false)
+                        .create()
+                        .show();
+                return true;
+            };
+        });
+
+        mWebView.setWebViewClient(new WishWebViewClient());
+        mWebView.loadUrl("http://b2b.shinsegae-con.co.kr/android/ReadingApp/test.html" );            // 웹뷰에서 불러올 URL 입력
+
     }
 
     @Override
-
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()){
             mWebView.goBack();
